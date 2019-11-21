@@ -42,13 +42,14 @@ def read_data_file(datafile):
         while not done:
             line = f.readline().rstrip()
             if line:
-                fstrs = line.split(' ')
-                name = fstrs[0]
-                features = []
-                for i in range(1, len(fstrs)):
-                    features.append(int(fstrs[i]))
-                entry = (name, features)
-                data.append(entry)
+                if not line.startswith('#'):
+                    fstrs = line.split(' ')
+                    name = fstrs[0]
+                    features = []
+                    for i in range(1, len(fstrs)):
+                        features.append(int(fstrs[i]))
+                    entry = (name, features)
+                    data.append(entry)
             else:
                 done = True
     return data

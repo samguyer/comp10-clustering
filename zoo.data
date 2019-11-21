@@ -1,3 +1,9 @@
+# Animal name, features:
+# 1:has hair, 2:has feathers, 3:lays eggs, 4:produces milk,
+# 5:is 6:airborne, 6:is aquatic, 7:is a predator, 8:has teeth,
+# 9:has backbone, 10:breathes air, 11:is venomous, 12:has fins,
+# 13:number of legs, 14:has a tail, 15:is domesticated,
+# 16:is cat-sized
 polecat 1 0 0 1 0 0 1 1 1 1 0 0 4 1 0 1
 gull 0 1 1 0 1 1 1 0 1 1 0 0 2 1 0 0
 hare 1 0 0 1 0 0 0 1 1 1 0 0 4 1 0 0
