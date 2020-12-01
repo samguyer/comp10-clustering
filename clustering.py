@@ -7,23 +7,56 @@ def entry_distance(entry1, entry2):
     return d
 
 # -- Compute the distance between two clusters
-def cluster_distance_min(c1, c2):
+#    Set the variable below to choose which kind
+#    of distance we use:
+#      1 for minimum distance
+#      2 for maximum distance
+#      3 for average distance
+distance_kind = 1
+
+def cluster_distance(c1, c2):
     d = 0.0
+    if distance_kind == 1:
+        # -- Compute minimum distance
+        d = 0.0
+    elif distance_kind == 2:
+        # -- Compute maximum distance
+        d = 0.0
+    else:
+        # -- Compute average distance
+        d = 0.0
+
     return d
 
 # -- Find the closest pair of clusters
 #    Return them as a tuple of two clusters
-def find_closest_pair(data):
-    result = None
-    min_distance = 999
-    for c1 in data:
-        for c2 in data:
-            if c1 is not c2:
-                d = cluster_distance_min(c1, c2)
-                if d < min_distance:
-                    result = (c1, c2)
-                    min_distance = d
+def find_closest_pair(clusters):
+    result = (None, None)
     return result
+
+# -- Main clustering algorithm
+#    Start by creating a set of clusters where each one has
+#    just a single data item in it. Then merge clusters by
+#    picking the two that are closest together and merging
+#    them into one until we reach the target number of
+#    clusters.
+def do_clustering(data, target):
+    num_iterations = 0
+    clusters = make_clusters(data)
+    while len(clusters) > target:
+        # -- Find the pair of clusters closest together
+        (c1, c2) = find_closest_pair(clusters)
+
+        # -- Merge them together
+        clusters.remove(c1)
+        clusters.remove(c2)
+        c3 = c1 + c2
+        clusters.append(c3)
+
+        num_iterations += 1
+        print("Iteration " + str(num_iterations) + " " + str(len(clusters)) + " clusters")
+
+    return clusters
 
 
 # -- Make an initial set of clusters
@@ -33,6 +66,7 @@ def make_clusters(data):
     for entry in data:
         clusters.append([entry])
     return clusters
+
 
 # -- Read in the data file
 def read_data_file(datafile):
@@ -125,20 +159,7 @@ while not done:
         target_s = input("Target number of clusters: ")
         target = int(target_s)
 
-        num_iterations = 0
-        clusters = make_clusters(data)
-        while len(clusters) > target:
-            # -- Find the pair of clusters closest together
-            (c1, c2) = find_closest_pair(clusters)
-
-            # -- Merge them together
-            clusters.remove(c1)
-            clusters.remove(c2)
-            c3 = c1 + c2
-            clusters.append(c3)
-
-            num_iterations += 1
-            print("Iteration " + str(num_iterations) + " " + str(len(clusters)) + " clusters")
+        clusters = do_clustering(data, target)
 
         cnum = 1
         for c in clusters:
