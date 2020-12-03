@@ -6,31 +6,37 @@ def entry_distance(entry1, entry2):
     d = 0.0
     return d
 
-# -- Compute the distance between two clusters
-#    Set the variable below to choose which kind
-#    of distance we use:
-#      1 for minimum distance
-#      2 for maximum distance
-#      3 for average distance
-distance_kind = 1
-
-def cluster_distance(c1, c2):
+# -- Compute the minimum distance between two clusters
+#    Loop over all pairs of entries (one from c1 and
+#    one from c2), compute the distance between the
+#    pairs, and choose the SMALLEST of the distances.
+def min_cluster_distance(c1, c2):
     d = 0.0
-    if distance_kind == 1:
-        # -- Compute minimum distance
-        d = 0.0
-    elif distance_kind == 2:
-        # -- Compute maximum distance
-        d = 0.0
-    else:
-        # -- Compute average distance
-        d = 0.0
+    return d
 
+# -- Compute the maximum distance between two clusters
+#    Loop over all pairs of entries (one from c1 and
+#    one from c2), compute the distance between the
+#    pairs, and choose the LARGEST of the distances.
+def max_cluster_distance(c1, c2):
+    d = 0.0
+    return d
+
+# -- Compute the average distance between two clusters
+#    Loop over all pairs of entries (one from c1 and
+#    one from c2), compute the average of ALL the distances.
+def average_cluster_distance(c1, c2):
+    d = 0.0
     return d
 
 # -- Find the closest pair of clusters
-#    Return them as a tuple of two clusters
-def find_closest_pair(clusters):
+#    Loop over all the possible pairs of clusters, figure out
+#    which pair are closest together according to the choice
+#    of metric:
+#       1 means minimum distance
+#       2 means maximum distance
+#       3 means average distance
+def find_closest_pair(clusters, metric):
     result = (None, None)
     return result
 
@@ -40,12 +46,12 @@ def find_closest_pair(clusters):
 #    picking the two that are closest together and merging
 #    them into one until we reach the target number of
 #    clusters.
-def do_clustering(data, target):
+def do_clustering(data, target, metric):
     num_iterations = 0
     clusters = make_clusters(data)
     while len(clusters) > target:
         # -- Find the pair of clusters closest together
-        (c1, c2) = find_closest_pair(clusters)
+        (c1, c2) = find_closest_pair(clusters, metric)
 
         # -- Merge them together
         clusters.remove(c1)
@@ -67,6 +73,9 @@ def make_clusters(data):
         clusters.append([entry])
     return clusters
 
+# ---------------------------------------------------------
+#  Code to read in and normalize the data
+#  You shouldn't need to modify anything here
 
 # -- Read in the data file
 def read_data_file(datafile):
@@ -129,17 +138,17 @@ def find_entry(name, data):
             return entry
     return None
 
-
+# ---------------------------------------------------------
 # -- Here's where the program actually starts running...
 filename = input('Enter data file name: ')
 data_raw = read_data_file((filename))
 
 # -- Normalize the data
 data = normalize(data_raw)
+print("Read in {} data entries".format(len(data)))
 
 # -- User interaction
 done = False
-
 while not done:
     print("Enter choice:")
     print(" 1: Test entry distance function")
