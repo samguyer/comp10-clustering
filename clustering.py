@@ -2,6 +2,8 @@
 import math
 
 # -- Compute the distance between two entries
+#    An entry is a tuple of (name, values) and
+#    values is the vector representing the features
 def entry_distance(entry1, entry2):
     d = 0.0
     return d
@@ -165,10 +167,10 @@ while not done:
             d = entry_distance(entry1, entry2)
             print("Distance " + s1 + " to " + s2 + " = " + str(d))
     elif choice == 2:
-        target_s = input("Target number of clusters: ")
-        target = int(target_s)
+        target = int(input("Target number of clusters: "))
+        metric = int(input("Metric (1=min, 2=max, 3=ave):"))
 
-        clusters = do_clustering(data, target)
+        clusters = do_clustering(data, target, metric)
 
         cnum = 1
         for c in clusters:
